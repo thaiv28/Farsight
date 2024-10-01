@@ -76,8 +76,8 @@ def create_player_stats_db(df: pd.DataFrame):
 def main():
     df = pd.read_csv(RAW_DIR + "complete_raw_data.csv")
     
-    #create_players_db(df)
-    #create_matches_db(df)
+    create_players_db(df)
+    create_matches_db(df)
     create_player_stats_db(df)
     
     
