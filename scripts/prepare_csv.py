@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import csv
 
 import pandas as pd
 
@@ -10,27 +11,28 @@ RAW_DIR = "../data/raw/"
 PREPROCESS_DIR = "../data/preprocessed/"
 
 def create_players_db(df: pd.DataFrame):
-    players_df = df.drop_duplicates(subset="playerid")
+    players_df = df[df.position != "team"]
+    players_df = players_df.drop_duplicates(subset="playerid")
     players_df = players_df["playerid"]
     
-    players_df.to_csv(PREPROCESS_DIR + "player_db.csv", index=False)
+    players_df.to_csv(PREPROCESS_DIR + "player_db.csv", index=False,
+                      quoting=csv.QUOTE_STRINGS, quotechar="\"")
 
 def create_matches_db(df: pd.DataFrame):
     # create dataframe of all rows with match info
     match_df = df[df.position == "team"]
-    match_df = match_df[["gameid", "url", "league", "playoffs", "date", "game",
+    match_df = match_df[["gameid", "league", "year", "playoffs", "date", "game",
                         "patch", "side", "teamname", "gamelength", "result", "inhibitors",
                         "opp_inhibitors", "gspd", "gpr"]]
    
    # move columns around to match sql table ordering 
     match_keys = match_df["gameid"] + "_" + match_df["side"]
-    game_lengths = match_df["gamelength"]
     
-    match_df = match_df.drop(columns=["gameid", "gamelength"])
+    match_df = match_df.drop(columns=["gameid"])
     match_df.insert(0, "match_key", match_keys)
-    match_df = match_df.join(game_lengths)
     
-    match_df.to_csv(PREPROCESS_DIR + "match_stat_db.csv", index=False)        
+    match_df.to_csv(PREPROCESS_DIR + "match_stat_db.csv", index=False,
+                    quoting=csv.QUOTE_STRINGS, quotechar="\"")        
 
 def create_player_stats_db(df: pd.DataFrame):
     stats_df = df[df.position != "team"]
@@ -67,14 +69,15 @@ def create_player_stats_db(df: pd.DataFrame):
     match_keys = stats_df["gameid"] + "_" + stats_df["side"]
     stats_df.insert(1, "match_key", match_keys)
     
-    stats_df = stats_df.drop(columns=["gameid", "participantid"])
+    stats_df = stats_df.drop(columns=["gameid", "participantid", "side"])
   
-    print(stats_df.head())
-    stats_df.to_csv(PREPROCESS_DIR + "player_stat_db.csv", index=False) 
+    stats_df.to_csv(PREPROCESS_DIR + "player_stat_db.csv", index=False,
+                    quoting=csv.QUOTE_STRINGS, quotechar="\"") 
     
 
 def main():
     df = pd.read_csv(RAW_DIR + "complete_raw_data.csv")
+    df = df[df.datacompleteness == "complete"]
     
     create_players_db(df)
     create_matches_db(df)
