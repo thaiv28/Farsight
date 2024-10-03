@@ -16,7 +16,7 @@ The stats are tracked per player and per team, but for our purposes we care abou
 This includes basic stats such as Kills, Deaths, and Assists and more advanced stats such as Exp@15 (Experience at 15 minutes) and GoldDiff@15 (Gold difference at 15 minutes). 
 
 In total, this raw data consists of nearly 100,000 matches. Each match contains
-a row for each of the 10 players and two teams, meaning the dataset is 900,000 rows large. This data is stored in an AWS-hosted PostegreSQL database.
+a row for each of the 10 players and two teams, meaning the dataset is 900,000 rows large. This data is stored in an AWS-hosted PostgreSQL database.
 
 ### Our Dataset
 
