@@ -37,7 +37,9 @@ def create_matches_db(df: pd.DataFrame):
 def create_player_stats_db(df: pd.DataFrame):
     stats_df = df[df.position != "team"]
     stats_df = stats_df[["gameid", "participantid", "side", "playerid",
-                                    "position", "kills", "deaths", "assists", "teamkills",
+                                    "position", "gamelength", "result", "inhibitors",
+                                    "opp_inhibitors", "gspd",
+                                    "gpr", "kills", "deaths", "assists", "teamkills",
                                     "teamdeaths", "doublekills", "triplekills",
                                     "quadrakills", "pentakills", "firstblood", "firstbloodkill",
                                     "firstbloodassist", "damagetochampions",
