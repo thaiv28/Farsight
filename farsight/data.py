@@ -7,7 +7,6 @@ import farsight.db as db
 # given a player and a date, find the average of player's stats from player_stat_db
 # prior to that date
 def calculate_averages(player_id: str, date=None, con=None):
-    print(f"{player_id=}, {date=}")
     if date == None:
         date = datetime.date.today()
     

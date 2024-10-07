@@ -3,6 +3,7 @@ create table dataset (
 	match_key text references match_stat(match_key),
 	position text not null
 	constraint check_position check (position in ('top', 'jng', 'mid', 'bot', 'sup')),
+	date text not null,
 	target_kills int,
 	player_avg_result real,
 	player_avg_length real,
