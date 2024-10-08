@@ -1,6 +1,6 @@
-import farsight.db as db
-import farsight.data as data
-import farsight.sql_helpers as sql_helpers
+import farsight.db.connection as connection
+import farsight.db.queries as queries
+import farsight.db.query_helpers as query_helpers
 
 def main():
     # for every match in match_stats
@@ -8,7 +8,7 @@ def main():
     #      calculate averages for that player
     #   create dataset
     
-    con, cur = db.connect()
+    con, cur = connection.connect()
     for year in range(2014, 2024):
         check_year = cur.execute(f"""
                                  SELECT date
@@ -46,13 +46,13 @@ def main():
                             """) 
             opponent_key = opponent_info.fetchone()[0]
             
-            player_stats = data.calculate_averages(player_key, date=date, con=con)
-            opponent_stats = data.calculate_averages(opponent_key, date=date, con=con)
+            player_stats = queries.calculate_averages(player_key, date=date, con=con)
+            opponent_stats = queries.calculate_averages(opponent_key, date=date, con=con)
         
             data_point = (match_key, position, date, kills) + player_stats + opponent_stats
             
             print(f"Adding data point for {match_key} {position} on {date}")
-            cur.execute(sql_helpers.INSERT_DATASET_SQL, data_point)
+            cur.execute(query_helpers.INSERT_DATASET_SQL, data_point)
         
         con.commit()
                 

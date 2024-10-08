@@ -1,9 +1,9 @@
 import sqlite3
 
-import farsight.db as db
+import farsight.db.connection as connection
 
 def main():
-    con, cur = db.connect()
+    con, cur = connection.connect()
     
     cur.execute("PRAGMA table_info(player_stat);")
     columns = [info[1] for info in cur.fetchall()]
