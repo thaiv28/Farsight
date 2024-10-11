@@ -26,11 +26,11 @@ def main():
                             FROM match_stat
                             INNER JOIN player_stat 
                                 ON match_stat.match_key = player_stat.match_key
-                            WHERE strftime('%Y', date) = '{year}'
+                            WHERE strftime('%Y/%m', date) = '{year}/{month:02}'
                             ORDER BY date ASC;
                             """)
         
-            
+            # TODO: Remove gspd, gpr from player_stat to use from match_stat instead 
             for match_key, player_key, date, position, kills in match_info.fetchall():
                 if match_key.endswith("_Red"):
                     opponent_match_key = match_key[:-4] + "_Blue"
