@@ -44,3 +44,10 @@ place.
 
 The scripts that we use to transform from raw data to our dataset and described in
 the [scripts directory README](scripts/README.md).
+
+### The Model
+
+The model being used is a neural network using the PyTorch framework. We decided 
+on a pyramid structure that slowly reduces the width of the layers. The target
+variable is the number of kills that a certain player obtained during a match.
+
