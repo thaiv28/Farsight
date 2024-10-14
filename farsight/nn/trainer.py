@@ -11,9 +11,9 @@ epochs = 5
 
 def main():
     train_set, validate_set, test_set = split_dataset([
-        ("2014-01-01", "2017-12-31"), 
-        ("2018-01-01", "2018-12-31"), 
-        ("2019-01-01", "2019-12-31")
+        ("2014-01-01", "2022-12-31"), 
+        ("2023-01-01", "2023-05-31"), 
+        ("2023-06-01", "2023-12-31")
     ])
    
     train_dataloader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
