@@ -1,3 +1,6 @@
+import pathlib
+import os
+
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -28,7 +31,13 @@ def main():
     for i in range(epochs):
         print(f"EPOCH {i} STARTING:")
         train(train_dataloader, model, loss_fn, optimizer)
-        test(validate_dataloader, model, loss_fn)
+    
+    print(f"VALIDATION SET:")     
+    test(validate_dataloader, model, loss_fn)
+    
+    file_path = os.path.realpath(__file__)
+    torch.save(model.state_dict(), file_path + "../models/nn.pt")
+
 
 def train(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
